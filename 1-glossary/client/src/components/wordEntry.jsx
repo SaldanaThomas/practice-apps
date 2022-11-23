@@ -1,11 +1,38 @@
-import React from 'react';
+import {useState} from 'react';
 
-const wordEntry = ({item}) => {
+const wordEntry = ({item, remove, edit}) => {
+  const [definition, setDefinition] = useState(false);
+  const [update, setUpdate] = useState('');
+
+  const editField = () => {
+    event.preventDefault();
+    setDefinition(!definition);
+  }
+
+  const updateTerm = () => {
+    event.preventDefault();
+    setUpdate(event.target.value);
+  };
+
+  const submitTerm = () => {
+    event.preventDefault();
+    setDefinition(!definition);
+    edit(item.term, update);
+  };
 
   return (
     <div>
-      <h4>{item.word}<button>EDIT</button><button>DELETE</button></h4>
-      <div>{item.defintion}</div>
+      <h4>{item.term}
+        <button onClick={editField}>EDIT</button>
+        <button onClick={() => remove(item.term)}>DELETE</button>
+      </h4>
+      <div>{definition
+        ? <div>
+            <input onChange={updateTerm}></input>
+            <button onClick={submitTerm}>UPDATE</button>
+          </div>
+        : item.definition}
+      </div>
     </div>
   );
 }
