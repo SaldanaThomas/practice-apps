@@ -23,12 +23,14 @@ const wordEntry = ({item, remove, edit}) => {
   return (
     <div>
       <h4>{item.term}
-        <button onClick={editField}>EDIT</button>
-        <button onClick={() => remove(item.term)}>DELETE</button>
+        <span>
+          <button onClick={editField}>EDIT</button>
+          <button onClick={() => remove(item.term)}>DELETE</button>
+        </span>
       </h4>
       <div>{definition
         ? <div>
-            <input onChange={updateTerm}></input>
+            <input placeholder={item.definition} onChange={updateTerm}></input>
             <button onClick={submitTerm}>UPDATE</button>
           </div>
         : item.definition}

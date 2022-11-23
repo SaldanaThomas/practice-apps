@@ -1,19 +1,12 @@
 const {PORT, DB_NAME} = require("dotenv").config();
 const express = require("express");
-const path = require("path");
-
 const app = express();
+const path = require("path");
+const router = require('./routes.js');
 
-// Serves up all static and generated assets in ../client/dist.
+app.use(express.json());
+app.use('/glossary', router);
 app.use(express.static(path.join(__dirname, "../client/dist")));
-
-/****
- *
- *
- * Other routes here....
- *
- *
- */
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

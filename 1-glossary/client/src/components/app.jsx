@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import AddWord from "./addWord.jsx";
 import SearchWord from './searchWord.jsx';
 import WordList from "./wordList.jsx";
+import axios from "axios";
 
 const Glossary = [
   {term: 'syntax', definition: 'the arrangement of words and phrases to create well-formed sentences in a language.'},
