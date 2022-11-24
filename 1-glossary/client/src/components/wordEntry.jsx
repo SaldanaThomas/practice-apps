@@ -4,16 +4,19 @@ const wordEntry = ({item, remove, edit}) => {
   const [definition, setDefinition] = useState(false);
   const [update, setUpdate] = useState('');
 
+  //Display input field for defintion if edit button clicked
   const editField = () => {
     event.preventDefault();
     setDefinition(!definition);
   }
 
+  //Store edit definition field data in update state
   const updateTerm = () => {
     event.preventDefault();
     setUpdate(event.target.value);
   };
 
+  //Pass updated definition to edit function in App.jsx
   const submitTerm = () => {
     event.preventDefault();
     setDefinition(!definition);

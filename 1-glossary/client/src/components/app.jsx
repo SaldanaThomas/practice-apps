@@ -9,21 +9,27 @@ const path = 'http://localhost:3000/glossary';
 const App = () => {
   const [words, setWords] = useState([])
   const [result, setResult] = useState([]);
+  const [search, setSearch] = useState('');
   const [render, setRender] = useState(false);
 
-  //Render/Rerender Glossary
+  //Rerender Glossary
   useEffect(() => {
     axios.get(path)
     .then(({data}) => setWords(data))
     .catch(err => console.log('FAILED TO RETRIEVE WORDS FROM DATABASE'))
     .then(() => setResult(createSearchResult()));
-  }, [render, result])
+  }, [render, result]);
+
+  //Update search term
+  const updateSearch = () => {
+    event.preventDefault();
+    setSearch(event.target.value);
+  };
 
   //Display words that contain search term
-  //Problem -> Constantly rerendering into empty search string resulting in full list
-  const createSearchResult = (searchWord = '', results = []) => {
+  const createSearchResult = (results = []) => {
     event.preventDefault();
-    words.forEach(word => word.term.includes(searchWord) && results.push(word));
+    words.forEach(word => word.term.toLowerCase().includes(search) && results.push(word));
     return results;
   };
 
@@ -34,7 +40,7 @@ const App = () => {
     .then(() => setRender(!render));
   };
 
-  //Updata definition of word in glossary
+  //Update definition of word in glossary
   const editWord = (term, newDefinition) => {
     event.preventDefault();
     axios.patch(path, {term: term, definition: newDefinition})
@@ -42,10 +48,8 @@ const App = () => {
   };
 
   //Remove word from glossary
-  //Problem -> If in search, delete rerenders all words instead of words in search
-  const removeWord = (word) => {
-    console.log(word);
-    axios.delete(path, word)
+  const removeWord = ({term, definition}) => {
+    axios.delete(path, {data: {term: term, definition: definition}})
     .then(() => setRender(!render));
   };
 
@@ -53,7 +57,7 @@ const App = () => {
   <div>
     <h1>Glossary!</h1>
     <div><AddWord add={addWord}/></div>
-    <div><SearchWord create={createSearchResult}/></div>
+    <div><SearchWord create={createSearchResult} update={updateSearch}/></div>
     <div><WordList items={result} remove={removeWord} edit={editWord}/></div>
   </div>
   );

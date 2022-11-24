@@ -1,16 +1,11 @@
 import {useState} from 'react';
 
-const searchWord = ({create}) => {
-  const [search, setSearch] = useState('');
-
-  const updateSearch = () => {
-    setSearch(event.target.value);
-  }
+const searchWord = ({create, update}) => {
 
   return (
     <div>
-      <input placeholder='search for a word...' onChange={updateSearch}></input>
-      <button onClick={() => create(search)}>SEARCH WORD</button>
+      <input placeholder='search for a word...' onChange={update}></input>
+      <button onClick={create}>SEARCH WORD</button>
     </div>
   );
 };
