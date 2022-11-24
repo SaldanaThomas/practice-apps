@@ -1,9 +1,9 @@
 const {PORT, DB_NAME} = require("dotenv").config();
 const express = require("express");
-const app = express();
 const path = require("path");
 const router = require('./routes.js');
 
+const app = express();
 app.use(express.json());
 app.use('/glossary', router);
 app.use(express.static(path.join(__dirname, "../client/dist")));

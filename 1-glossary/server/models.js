@@ -1,29 +1,27 @@
 const db = require('./db');
 
-
 module.exports = {
-  add: (data, callback) => {
-    console.log('INSIDE CONTROLLERS');
-    db.add(data, (err) => {
+  add: (word, callback) => {
+    db.add(word, (err) => {
       err ? callback(err) : callback(null);
     })
-  }//,
+  },
 
-  // get: (callback) => {
-  //   db.get((err, data) => {
-  //     err ? callback(err) : callback(null, data);
-  //   });
-  // },
+  get: (callback) => {
+    db.get((err, data) => {
+      err ? callback(err) : callback(null, data);
+    });
+  },
 
-  // patch: (data, callback) => {
-  //   db.get(data, (err) => {
-  //     err ? callback(err) : callback(null);
-  //   });
-  // },
+  patch: (data, callback) => {
+    db.patch(data, (err) => {
+      err ? callback(err) : callback(null);
+    });
+  },
 
-  // delete: (data, callback) => {
-  //   db.get(data, (err) => {
-  //     err ? callback(err) : callback(null);
-  //   });
-  // }
+  delete: (data, callback) => {
+    db.delete(data, (err) => {
+      err ? callback(err) : callback(null);
+    });
+  }
 };

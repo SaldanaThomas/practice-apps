@@ -9,17 +9,27 @@ const repoSchema = mongoose.Schema({
 const repo = mongoose.model('Repo', repoSchema);
 
 module.exports = {
-  add: (data, callback) => {
-    console.log('IN DATABASE');
-    repo.insertMany(data, (err) => {
+  add: (word, callback) => {
+    repo.insertMany(word, (err) => {
       callback(err);
     })
-  }//,
+  },
 
-  // get: (callback) => {
-  //   repo.find({})
-  //   .exec((err, data) => {
-  //     callback(err, data);
-  //   })
-  // }
+  get: (callback) => {
+    repo.find({})
+    .exec((err, data) => {
+      callback(err, data);
+    })
+  },
+
+  patch: (word, callback) => {
+    let filter = {term: word.term};
+    repo.updateOne(filter, word)
+    .exec(err => callback(err));
+  },
+
+  delete: (word, callback) => {
+    repo.deleteOne(word)
+    .exec(err => callback(err));
+  }
 };
