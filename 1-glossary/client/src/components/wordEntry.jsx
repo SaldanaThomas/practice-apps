@@ -25,7 +25,7 @@ const wordEntry = ({item, remove, edit}) => {
       <h4>{item.term}
         <span>
           <button onClick={editField}>EDIT</button>
-          <button onClick={() => remove(item.term)}>DELETE</button>
+          <button onClick={() => remove(item)}>DELETE</button>
         </span>
       </h4>
       <div>{definition

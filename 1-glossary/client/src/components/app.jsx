@@ -4,54 +4,49 @@ import SearchWord from './searchWord.jsx';
 import WordList from "./wordList.jsx";
 import axios from "axios";
 
-const Glossary = [
-  {term: 'syntax', definition: 'the arrangement of words and phrases to create well-formed sentences in a language.'},
-  {term: 'component', definition: 'a part or element of a larger whole, especially a part of a machine or vehicle.'},
-  {term: 'server', definition: 'a computer or computer program which manages access to a centralized resource or service in a network.'}
-]
+const path = 'http://localhost:3000/glossary';
 
 const App = () => {
-  const [words, setWords] = useState(Glossary);
-  const [result, setResult] = useState(Glossary);
+  const [words, setWords] = useState([])
+  const [result, setResult] = useState([]);
   const [render, setRender] = useState(false);
 
+  //Render/Rerender Glossary
   useEffect(() => {
-    createSearchResult();
-  }, [words, render])
+    axios.get(path)
+    .then(({data}) => setWords(data))
+    .catch(err => console.log('FAILED TO RETRIEVE WORDS FROM DATABASE'))
+    .then(() => setResult(createSearchResult()));
+  }, [render, result])
 
+  //Display words that contain search term
+  //Problem -> Constantly rerendering into empty search string resulting in full list
   const createSearchResult = (searchWord = '', results = []) => {
     event.preventDefault();
     words.forEach(word => word.term.includes(searchWord) && results.push(word));
-    setResult(results);
+    return results;
   };
 
+  //Add new word to glossary
   const addWord = (newTerm, newDefinition) => {
     event.preventDefault();
-    Glossary.push({term: newTerm, definition: newDefinition});
-    setWords(Glossary);
-    setRender(!render);
+    axios.post(path, {term: newTerm, definition: newDefinition})
+    .then(() => setRender(!render));
   };
 
+  //Updata definition of word in glossary
   const editWord = (term, newDefinition) => {
-    Glossary.forEach((word, index) => {
-      if (word.term === term) {
-        word.definition = newDefinition;
-      }
-    });
-    setWords(Glossary);
-    setRender(!render);
+    event.preventDefault();
+    axios.patch(path, {term: term, definition: newDefinition})
+    .then(() => setRender(!render));
   };
 
-  const removeWord = (term) => {
-    //problem -> if in search, delete rerenders all non deleted words
-    event.preventDefault();
-    Glossary.forEach((word, index) => {
-      if (word.term === term) {
-        Glossary.splice(index, 1);
-      }
-    });
-    setWords(Glossary);
-    setRender(!render);
+  //Remove word from glossary
+  //Problem -> If in search, delete rerenders all words instead of words in search
+  const removeWord = (word) => {
+    console.log(word);
+    axios.delete(path, word)
+    .then(() => setRender(!render));
   };
 
   return (

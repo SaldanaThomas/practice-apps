@@ -20,6 +20,7 @@ module.exports = {
   },
 
   delete: (req, res) => {
+    console.log('CONTROLLERS -> ', req.body);
     models.delete(req.body, (err) => {
       err ? res.status(404).send() : res.status(203).send();
     });
