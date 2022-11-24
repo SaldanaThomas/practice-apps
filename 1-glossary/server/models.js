@@ -2,26 +2,22 @@ const db = require('./db');
 
 module.exports = {
   add: (word, callback) => {
-    db.add(word, (err) => {
-      err ? callback(err) : callback(null);
-    })
+    db.insertMany(word, (err) => callback(err));
   },
 
   get: (callback) => {
-    db.get((err, data) => {
-      err ? callback(err) : callback(null, data);
-    });
+    db.find({})
+    .exec((err, data) => callback(err, data));
   },
 
   patch: (data, callback) => {
-    db.patch(data, (err) => {
-      err ? callback(err) : callback(null);
-    });
+    let filter = {term: data.term};
+    db.updateOne(filter, data)
+    .exec(err => callback(err));
   },
 
   delete: (data, callback) => {
-    db.delete(data, (err) => {
-      err ? callback(err) : callback(null);
-    });
+    db.deleteOne(data)
+    .exec(err => callback(err));
   }
 };

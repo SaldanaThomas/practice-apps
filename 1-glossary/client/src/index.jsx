@@ -3,6 +3,6 @@ import {render} from "react-dom";
 import App from "./components/app.jsx";
 
 render(
-  <div><App /></div>,
+  <div><App/></div>,
   document.getElementById("root")
 );
