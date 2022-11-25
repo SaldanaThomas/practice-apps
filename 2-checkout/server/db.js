@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-const db = Promise.promisifyAll(connection, { multiArgs: true });
+const db = Promise.promisifyAll(connection, {multiArgs: true});
 
 db.connectAsync()
   .then(() => console.log(`Connected to MySQL as id: ${db.threadId}`))
