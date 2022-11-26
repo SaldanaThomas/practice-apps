@@ -2,19 +2,28 @@ import {useState} from 'react';
 
 const Field3 = ({next}) => {
 
+  const handleSubmit = () => {
+    event.preventDefault();
+    let formData = new FormData(document.getElementById('Payment'));
+    let checkoutData = {};
+    for (const [key, value] of formData) {
+      checkoutData[key] = value;
+    }
+    next(checkoutData);
+  };
+
   return (
     <div>
       <h4>Please Enter Payment Info</h4>
-      <form>
-        <h6><input/> Credit Card Number</h6>
-        <h6><input/> Expiration Date</h6>
-        <h6><input/> CVV</h6>
-        <h6><input/> Billing Zip Code</h6>
-        <button onClick={next}>NEXT</button>
+      <form id='Payment' onSubmit={handleSubmit}>
+        <h6><input name='card'/> Credit Card Number</h6>
+        <h6><input name='expDate'/> Expiration Date</h6>
+        <h6><input name='cvv'/> CVV</h6>
+        <h6><input name='billZip'/> Billing Zip Code</h6>
+        <button type='submit'>NEXT</button>
       </form>
     </div>
   );
 };
 
 export default Field3;
-// F3 collects credit card #, expiry date, CVV, and billing zip code.

@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import axios from 'axios';
 import Field1 from './field1.jsx';
 import Field2 from './field2.jsx';
 import Field3 from './field3.jsx';
@@ -13,40 +14,44 @@ const App = () => {
   const [confirmation, setConfirmation] = useState(false);
 
   const startUserInfo = () => {
-    event.preventDefault();
     setCheckout(true);
     setUserInfo(true);
   };
 
-  const startAddressInfo = () => {
-    event.preventDefault();
+  const startAddressInfo = (fields) => {
     setUserInfo(false);
+    setData(fields);
     setAddressInfo(true);
   };
 
-  const startPaymentInfo = () => {
-    event.preventDefault();
+  const startPaymentInfo = (fields) => {
+    for (const key in fields) {
+      data[key] = fields[key]
+    }
+    setData(data);
     setAddressInfo(false);
     setPaymentInfo(true);
   };
 
-  const startConfirmation = () => {
-    event.preventDefault();
+  const startConfirmation = (fields) => {
+    for (const key in fields) {
+      data[key] = fields[key]
+    }
+    setData(data);
     setPaymentInfo(false);
     setConfirmation(true);
   };
 
   const confirmPurchase = () => {
-    event.preventDefault();
+    // axios.post('/checkout', data);
     setConfirmation(false);
     setCheckout(false);
   };
 
-  console.log(document.cookie);
+  // console.log(document.cookie);
   return (
     <div>
       <h1>Multistep Checkout</h1>
-      <button onClick={startUserInfo}>Checkout</button>
       <div>{checkout
         ? <div><h2>Currently Checking Out</h2>
           <div>{userInfo
@@ -62,11 +67,14 @@ const App = () => {
             : <div></div>}
           </div>
           <div>{confirmation
-            ? <Confirmation next={confirmPurchase}/>
+            ? <Confirmation next={confirmPurchase} data={data}/>
             : <div></div>}
             </div>
         </div>
-        : <h2>It's time to buy that thing you always wanted!</h2>}
+        : <div>
+            <h2>It's time to buy that thing you always wanted!</h2>
+            <button onClick={startUserInfo}>Checkout</button>
+          </div>}
       </div>
     </div>
   );
