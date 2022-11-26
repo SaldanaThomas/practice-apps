@@ -43,7 +43,7 @@ const App = () => {
   };
 
   const confirmPurchase = () => {
-    // axios.post('/checkout', data);
+    axios.post('/checkout', data);
     setConfirmation(false);
     setCheckout(false);
   };

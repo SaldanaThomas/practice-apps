@@ -16,10 +16,10 @@ const Field1 = ({next}) => {
     <div>
       <h4>Please Enter Account Info</h4>
       <form id='Account' onSubmit={handleSubmit}>
-        <h6><input name='name'/> Name</h6>
-        <h6><input name='email'/> Email</h6>
-        <h6><input name='password'/> Password</h6>
-        <button type='submit'>NEXT</button>
+        <h6><input name='name' maxLength='20' required/> Name</h6>
+        <h6><input name='email' maxLength='20' required/> Email</h6>
+        <h6><input name='password' maxLength='20' required/> Password</h6>
+        <button type='submit' required>NEXT</button>
       </form>
     </div>
   );

@@ -16,11 +16,11 @@ const Field3 = ({next}) => {
     <div>
       <h4>Please Enter Payment Info</h4>
       <form id='Payment' onSubmit={handleSubmit}>
-        <h6><input name='card'/> Credit Card Number</h6>
-        <h6><input name='expDate'/> Expiration Date</h6>
-        <h6><input name='cvv'/> CVV</h6>
-        <h6><input name='billZip'/> Billing Zip Code</h6>
-        <button type='submit'>NEXT</button>
+        <h6><input name='card' maxLength='20' required/> Credit Card Number</h6>
+        <h6><input name='expDate' maxLength='5' required/> Expiration Date</h6>
+        <h6><input name='cvv' maxLength='4' required/> CVV</h6>
+        <h6><input name='billZip' maxLength='9' required/> Billing Zip Code</h6>
+        <button type='submit' required>NEXT</button>
       </form>
     </div>
   );
