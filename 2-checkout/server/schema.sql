@@ -6,6 +6,7 @@ USE checkout;
 
 CREATE TABLE checkout (
   id INT AUTO_INCREMENT,
+  sessionId VARCHAR(100) UNIQUE,
   name VARCHAR(20),
   email VARCHAR(20),
   password VARCHAR(20),

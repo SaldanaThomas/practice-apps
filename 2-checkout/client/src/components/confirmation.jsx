@@ -1,7 +1,6 @@
 import {useState} from 'react';
 
 const Confirmation = ({next, data}) => {
-  console.log(data);
 
   return (
     <div>

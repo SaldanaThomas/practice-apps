@@ -6,7 +6,7 @@ import Field3 from './field3.jsx';
 import Confirmation from './confirmation.jsx';
 
 const App = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({sessionId: document.cookie});
   const [checkout, setCheckout] = useState(false);
   const [userInfo, setUserInfo] = useState(false);
   const [addressInfo, setAddressInfo] = useState(false);
@@ -20,7 +20,10 @@ const App = () => {
 
   const startAddressInfo = (fields) => {
     setUserInfo(false);
-    setData(fields);
+    for (const key in fields) {
+      data[key] = fields[key];
+    }
+    setData(data);
     setAddressInfo(true);
   };
 
@@ -43,12 +46,16 @@ const App = () => {
   };
 
   const confirmPurchase = () => {
-    axios.post('/checkout', data);
-    setConfirmation(false);
-    setCheckout(false);
+    axios.post('/checkout', data)
+    .then(() => {
+      setConfirmation(false);
+      setCheckout(false);
+    })
+    .catch(err => {
+      document.body.innerHTML = 'FAILED PURCHASE. YOU HAVE ALREADY MADE YOUR PURCHASE';
+    });
   };
 
-  // console.log(document.cookie);
   return (
     <div>
       <h1>Multistep Checkout</h1>

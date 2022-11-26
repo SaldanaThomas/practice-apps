@@ -7,8 +7,8 @@ module.exports = {
     });
   },
 
-  post: ({name, email, password, address, phone, card, expDate, cvv, billZip}, callback) => {
-    db.query(`INSERT INTO checkout (name, email, password, address, phone, card, expDate, cvv, billZip) VALUES ("${name}", "${email}", "${password}", "${address}", "${phone}", "${card}", "${expDate}", "${cvv}", "${billZip}")`, (err, data) => {
+  post: ({sessionId, name, email, password, address, phone, card, expDate, cvv, billZip}, callback) => {
+    db.query(`INSERT INTO checkout (sessionId, name, email, password, address, phone, card, expDate, cvv, billZip) VALUES ("${sessionId}", "${name}", "${email}", "${password}", "${address}", "${phone}", "${card}", "${expDate}", "${cvv}", "${billZip}")`, (err, data) => {
       callback(err, data)
     });
   }
